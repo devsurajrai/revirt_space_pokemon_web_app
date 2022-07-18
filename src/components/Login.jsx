@@ -35,7 +35,7 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="flex  justify-center  min-h-[100vh] bg-slate-300">
+    <div className="flex  justify-center  min-h-[100vh] ">
       <button
         id="login-button"
         onClick={() => {

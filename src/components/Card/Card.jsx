@@ -18,15 +18,27 @@ export const Card = ({ pokemonName, inFavourites }) => {
   const favourites = useSelector(selectfavourites);
   const isLoggedIn = useSelector(selectAuth);
   const shouldAddToFavourites = isPokemonInFavourites(favourites, pokemonName);
+  const [isBackFaceVisible, setIsBackFaceVisible] = useState(false);
   useEffect(() => {
     fetchPokemonData(pokemonName, setPokemonData);
   }, [pokemonName]);
   return (
-    <div className="relative flex flex-col items-center">
+    <div className=" flex flex-col items-center">
       {pokemonData && (
         <>
-          <CardFront pokemonData={pokemonData} pokemonName={pokemonName} />
-          <CardBack stats={pokemonData.stats} />
+          {!isBackFaceVisible && (
+            <CardFront
+              pokemonData={pokemonData}
+              pokemonName={pokemonName}
+              callback={() => setIsBackFaceVisible(!isBackFaceVisible)}
+            />
+          )}
+          {isBackFaceVisible && (
+            <CardBack
+              stats={pokemonData.stats}
+              callback={() => setIsBackFaceVisible(!isBackFaceVisible)}
+            />
+          )}
         </>
       )}
       {!inFavourites && (

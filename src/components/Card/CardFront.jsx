@@ -1,6 +1,6 @@
 import { getCapitalizedName } from "../../utils/getCapitalizedName";
 
-export const CardFront = ({ pokemonData, pokemonName }) => {
+export const CardFront = ({ pokemonData, pokemonName, callback }) => {
   const pokemonNameCapitalized = getCapitalizedName(pokemonName);
   const { "official-artwork": officialArtwork } = pokemonData.sprites.other;
   const { front_default: pokemonImage } = officialArtwork;
@@ -9,7 +9,10 @@ export const CardFront = ({ pokemonData, pokemonName }) => {
   const { order } = pokemonData !== undefined && pokemonData;
 
   return (
-    <div className="absolute flex flex-col items-center bg-white h-[20rem] w-[16rem] z-10 rounded-xl cursor-pointer hover:hidden shadow-md ">
+    <div
+      className=" flex flex-col items-center bg-white h-[20rem] w-[16rem] z-10 rounded-xl cursor-pointer  shadow-md  "
+      onMouseEnter={callback}
+    >
       <div className="mt-5 rounded-full w-44 h-44 p-1  bg--700 flex items-center">
         <img
           className="rounded-full bg-green-300 p-2"
