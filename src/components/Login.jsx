@@ -1,29 +1,48 @@
+/* eslint-disable no-undef */
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectAuth, setAuth } from "../redux/slices/authSlice";
-
+import {
+  selectAuth,
+  selectUserInfo,
+  setAuth,
+  setUserInfo,
+} from "../redux/slices/authSlice";
+import jwt_decode from "jwt-decode";
 const Login = () => {
-  const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectAuth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleCallbackResponse = (response) => {
+    if (response.credential) {
+      dispatch(setAuth(!isLoggedIn));
+      let userObject = response.credential && jwt_decode(response.credential);
+      dispatch(setUserInfo(userObject));
+      navigate("/");
+    } else console.log("Something Went Wrong");
+  };
+  useEffect(() => {
+    // global google
+    google.accounts.id.initialize({
+      client_id:
+        "566839184448-7qjafofhapeirodo7ub7kp08t61pnu2b.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+    google.accounts.id.renderButton(document.getElementById("login-button"), {
+      theme: "outline",
+      size: "large",
+    });
+  }, []);
+
   return (
-    <div className="relative flex flex-col items-center min-h-[100vh] bg-slate-300">
+    <div className="flex  justify-center  min-h-[100vh] bg-slate-300">
       <button
-        className="flex justify-center items-center bg-white p-2 w-[25vw] rounded-md mt-[12rem] cursor-pointer"
+        id="login-button"
         onClick={() => {
           dispatch(setAuth(!isLoggedIn));
           navigate("/");
         }}
-      >
-        <img
-          src="https://play-lh.googleusercontent.com/aFWiT2lTa9CYBpyPjfgfNHd0r5puwKRGj2rHpdPTNrz2N9LXgN_MbLjePd1OTc0E8Rl1"
-          alt="google_img"
-          className="w-10"
-        />
-        <span className="inline-block p-2 font-semibold hover:text-green-700 ">
-          LOGIN WITH GOOGLE
-        </span>
-      </button>
+      ></button>
     </div>
   );
 };

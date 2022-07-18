@@ -1,7 +1,12 @@
 import React from "react";
+import { Stats } from "./Stats.jsx";
 
-export const CardBack = () => {
+export const CardBack = ({ stats }) => {
+  console.log("card back stat", stats);
   return (
-    <div className="bg-red-700 h-[20rem] w-[16rem] rounded-xl cursor-pointer shadow-md"></div>
+    <div className=" h-[20rem] w-[16rem] rounded-xl cursor-pointer shadow-md p-3 bg-gray-800">
+      {stats &&
+        stats.map((stat) => <Stats key={stat.stat.url} pokemonStat={stat} />)}
+    </div>
   );
 };

@@ -18,8 +18,8 @@ export const ListingMain = () => {
   console.log(api, pokemonList);
   console.log(favourites);
   return (
-    <main className="flex flex-col items-center bg-slate-300 min-h-[100vh] ">
-      <h1 className=" text-4xl font-semibold p-4">Welcome to Pokemon Arena</h1>
+    <main className="flex flex-col items-center min-h-[100vh]  ">
+      <h1 className=" text-4xl font-semibold p-4 ">Welcome to Pokemon Arena</h1>
       <section className="mt-5">
         <label htmlFor="search">
           <input
